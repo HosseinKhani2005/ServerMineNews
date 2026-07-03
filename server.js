@@ -21,10 +21,11 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", apiRouter);
+
 const startServer = async () => {
   try {
     await connectdb(process.env.URL);
-    app.listen(port, () => {
+    app.listen(port, '0.0.0.0', () => {
       console.log(`Server run on port ${port}`);
     });
   } catch (error) {
