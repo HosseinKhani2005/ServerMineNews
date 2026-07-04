@@ -16,6 +16,7 @@ async function Register(req, res) {
       username: userdata.username,
       email: userdata.email,
     });
+    console.log("Register New User => ",newUser)
     const token = jwt.sign(
       { userid: newUser._id, username: newUser.username, email: newUser.email },
       process.env.SECRET_KEY,
