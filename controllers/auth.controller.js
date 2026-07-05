@@ -33,7 +33,7 @@ async function Register(req, res) {
     );
     const token = jwt.sign(
       {
-        userid: fixUserImg._id,
+        userId: fixUserImg._id,
         username: fixUserImg.username,
         email: fixUserImg.email,
         imageUrl: fixUserImg.imageUrl,
@@ -82,7 +82,7 @@ async function Login(req, res) {
     }
     const token = jwt.sign(
       {
-        userid: findUser._id,
+        userId: findUser._id,
         username: findUser.username,
         email: findUser.email,
         imageUrl: findUser.imageUrl,
@@ -131,7 +131,7 @@ async function checkAuth(req, res) {
       });
     }
 
-    const user = await User.findById(decoded.userid).select("-password");
+    const user = await User.findById(decoded.userId).select("-password");
 
     if (!user) {
       return res.status(404).json({
