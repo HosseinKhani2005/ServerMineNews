@@ -7,10 +7,10 @@ const {
   checkAuth,
   logout,
 } = require("../controllers/auth.controller");
+const { authLimiter } = require("../middleware/rateLimit");
 
-apiRouter.post("/auth/register", verifyCaptcha, Register);
-apiRouter.post("/auth/login", verifyCaptcha, Login);
+apiRouter.post("/auth/register", authLimiter, verifyCaptcha, Register);
+apiRouter.post("/auth/login", authLimiter, verifyCaptcha, Login);
 apiRouter.get("/auth/check", checkAuth);
 apiRouter.post("/auth/logout", logout);
-
 module.exports = { apiRouter };

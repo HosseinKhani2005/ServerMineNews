@@ -28,7 +28,7 @@ async function Register(req, res) {
     const avatar = `https://api.dicebear.com/10.x/bottts-neutral/svg?seed=${newUser._id}`;
     const fixUserImg = await User.findByIdAndUpdate(
       newUser._id,
-      { imageUrl: avatar },
+      { imageUrl: avatar, Createdtime: toShamsi(newUser.createdAt) },
       { returnDocument: "after" },
     );
     const token = jwt.sign(
@@ -55,7 +55,7 @@ async function Register(req, res) {
         username: fixUserImg.username,
         email: fixUserImg.email,
         imageUrl: fixUserImg.imageUrl,
-        dateCreate: toShamsi(fixUserImg.createdAt),
+        dateCreate: fixUserImg.Createdtime,
       },
     });
   } catch (error) {
@@ -105,7 +105,7 @@ async function Login(req, res) {
         username: findUser.username,
         email: findUser.email,
         imageUrl: findUser.imageUrl,
-        dateCreate: toShamsi(findUser.createdAt),
+        dateCreate: findUser.Createdtime,
       },
     });
   } catch (error) {
@@ -144,7 +144,7 @@ async function checkAuth(req, res) {
         username: user.username,
         email: user.email,
         imageUrl: user.imageUrl,
-        dateCreate: toShamsi(user.createdAt),
+        dateCreate: user.Createdtime,
       },
     });
   } catch (error) {
