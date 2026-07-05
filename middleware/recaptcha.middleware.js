@@ -23,7 +23,6 @@ const verifyCaptcha = async (req, res, next) => {
     );
     
     const { success, score } = response.data;
-    console.log(response.data)
     console.log('🔐 reCAPTCHA Result:', { success, score });
 
     if (!success) {

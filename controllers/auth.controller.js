@@ -2,12 +2,12 @@ const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const toShamsi = (date) => {
-  if (!date) return '---';
-  return new Intl.DateTimeFormat('fa-IR', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(date));      
+  if (!date) return "---";
+  return new Intl.DateTimeFormat("fa-IR", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(new Date(date));
 };
 async function Register(req, res) {
   try {
@@ -29,9 +29,8 @@ async function Register(req, res) {
     const fixUserImg = await User.findByIdAndUpdate(
       newUser._id,
       { imageUrl: avatar },
-      { new: true },
+      { returnDocument: "after" },
     );
-    console.log("Register New User => ", newUser);
     const token = jwt.sign(
       {
         userid: fixUserImg._id,
@@ -56,7 +55,7 @@ async function Register(req, res) {
         username: fixUserImg.username,
         email: fixUserImg.email,
         imageUrl: fixUserImg.imageUrl,
-        dateCreate : toShamsi(fixUserImg.createdAt)
+        dateCreate: toShamsi(fixUserImg.createdAt),
       },
     });
   } catch (error) {
@@ -99,14 +98,14 @@ async function Login(req, res) {
       sameSite: "none",
       maxAge: 60 * 60 * 1000,
     });
-    console.log(toShamsi(fixUserImg.createdAt)  )
+
     res.status(200).json({
       message: "",
       user: {
         username: findUser.username,
         email: findUser.email,
         imageUrl: findUser.imageUrl,
-        dateCreate : toShamsi(findUser.createdAt)
+        dateCreate: toShamsi(findUser.createdAt),
       },
     });
   } catch (error) {
@@ -145,7 +144,7 @@ async function checkAuth(req, res) {
         username: user.username,
         email: user.email,
         imageUrl: user.imageUrl,
-        dateCreate : toShamsi(user.createdAt)
+        dateCreate: toShamsi(user.createdAt),
       },
     });
   } catch (error) {
