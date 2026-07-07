@@ -19,28 +19,18 @@ app.use(
     crossOriginOpenerPolicy: { policy: "same-origin-allow-popups" } 
   })
 );
-const corsOptions = {
-  origin: function (origin, callback) {
-    const allowedOrigins = [
+app.use(
+  cors({
+    origin: [
       "http://localhost:3000",
       "https://www.hosseinkhani20.ir",
-      "https://hosseinkhani20.ir",
       "https://new-project-mu-ten.vercel.app",
-    ];
-    // Allow requests with no origin (like mobile apps or curl)
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error('Not allowed by CORS'));
-    }
-  },
-  credentials: true,
-  methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
-  allowedHeaders: ["Content-Type", "Authorization"],
-};
-
-app.use(cors(corsOptions));
+    ],
+    credentials: true,
+    methods: ["GET", "POST", "PUT", "DELETE", "PATCH", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  }),
+);
 app.use(express.json());
 app.use(cookieParser());
 app.set('trust proxy', 1); 
